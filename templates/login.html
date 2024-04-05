@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block content %}
+
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          {% for message in messages %}
+
+          <h5 class="flash" style="color:red; margin:20px 0 20px 450px;">{{ message }}</h5>
+
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+
+        <h3 style="margin:40px 0 40px 350px">{{work}}</h3>
+        {{ render_form(form) }}
+    </div>
+
+
+{% endblock %}
