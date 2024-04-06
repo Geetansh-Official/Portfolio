@@ -51,7 +51,7 @@ def admin():
             login_user(user)
             return redirect("/")
         else:
-            flask("Invalid username or password")
+            flash("Invalid username or password")
             return redirect(url_for("admin"))
 
     work = "Hurray! You have learnt something new I guess!"
