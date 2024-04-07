@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block content %}
+
+<h1>The Edit Page</h1>
+
+<h3>What would you like to edit about yourself!</h3>
+<h5><a href="{{url_for('about_edit')}}">Home</a></h5>
+<h5><a href="{{url_for('about_edit')}}">About Page</a></h5>
+<h5><a href="">Resume</a></h5>
+<h5><a href="">Portfolio</a></h5>
+<h5><a href="">Services</a></h5>
+<h5><a href="">Contact</a></h5>
+
+
+
+{% endblock %}

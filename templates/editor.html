@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block style %}
+<style>
+    /* Adjust the height of the CKEditor */
+    .ck-editor__editable {
+        height: 800px; /* Change the value as per your requirement */
+    }
+</style>
+{% endblock %}
+{% block content %}
+
+<h1>The Edit Page</h1>
+
+
+<div class="col-lg-10 col-md-10 mx-auto ck-editor__editable" >
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='about_content') }}
+    {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+</div>
+
+
+{% endblock %}

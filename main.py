@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, flash, url_for
-from forms import LoginForm, RegisterForm
+from forms import LoginForm, RegisterForm, AboutEdit
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from extensions import db
@@ -20,7 +20,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db.init_app(app)
 
 
-from databases import User, Skills
+from databases import User, Skills, AboutPage
 
 with app.app_context():
     db.create_all()
@@ -38,7 +38,9 @@ def load_user(user_id):
 # Designing the first page
 @app.route("/")
 def home():
-    return render_template("index.html", current_user=current_user)
+    about_content = db.get_or_404(AboutPage, 1)
+
+    return render_template("index.html", current_user=current_user, about_content=about_content.about_content)
 
 
 # Making up an Admin Palace
@@ -91,6 +93,24 @@ def register_me():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+def edit():
+    return render_template("edit.html")
+
+
+# Making different edit functions for editing different parts of the website
+@app.route('/about_edit', methods=['GET', 'POST'])
+def about_edit():
+    post = db.get_or_404(AboutPage, 1)
+    about_form = AboutEdit(body=post.about_content)
+
+    if about_form.validate_on_submit():
+        post.about_content = about_form.body.data
+        db.session.commit()
+        return redirect(url_for('edit'))
+
+    return render_template("editor.html", form=about_form)
 
 # Starting the application
 if __name__ == "__main__":
